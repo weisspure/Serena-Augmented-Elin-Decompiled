@@ -210,3 +210,9 @@ When you edit code files, Serena notices and updates the index. You don't need t
 **The .bat files are easier for non-programmers**
 
 The `.bat` files are just shortcuts to the PowerShell commands. Use the `.bat` versions if you're not comfortable with PowerShell.
+
+**Do I need `dotnet restore` in this repo?**
+
+No. `Elin-Decompiled` indexing is source-based and does not require restoring a solution first.
+
+If you are working in `Elin.Plugins`, run `dotnet restore Elin.Plugins.sln` once after clone as part of first-time setup.
