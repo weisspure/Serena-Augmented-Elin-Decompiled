@@ -70,13 +70,15 @@ dotnet --list-sdks
 
 You should see `10.0.100` (or similar 10.0.x version) in the list.
 
-### Step 4: Install the search tool (Serena) and its downloader
+### Step 4: Install `uv` (a tool that installs Python-based tools)
+
+`uv` does not come with Windows. It's a lightweight installer that handles downloading and managing Serena. Think of it like the App Store for developer tools.
 
 ```powershell
 winget install astral-sh.uv
 ```
 
-Then install Serena itself:
+Then use `uv` to install Serena itself:
 
 ```powershell
 uv tool install -p 3.13 serena-agent@latest --prerelease=allow
