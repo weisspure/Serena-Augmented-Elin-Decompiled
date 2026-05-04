@@ -12,6 +12,10 @@ This repo is set up so you can easily pull updates from the main repository, the
 3. A modern command shell to run the commands
 4. The Serena search tool itself
 
+### Shared Setup (Recommended for Both Elin-Decompiled and Elin.Plugins)
+
+To minimize setup friction, use one shared machine setup that works for both repos.
+
 ### The Specific Things to Install:
 
 **1. .NET Runtime (version 10 or newer)**
@@ -22,9 +26,13 @@ This is like a translator that lets your computer understand and run C# tools. T
 
 This is the text-based way you'll communicate with your computer to run commands. It's newer and better than the old "Command Prompt."
 
-**3. .NET SDK (Software Development Toolkit) version 10.0.100**
+**3. .NET SDK (Software Development Toolkit) version 10 (x64 + x86)**
 
-⚠️ **Important:** This repo was built using a specific version of the toolkit (10.0.100). You need exactly this version, not just any version 10. Think of it like needing the exact model of a car's engine—a similar engine won't work.
+⚠️ **Important:** Install both x64 and x86 SDK 10. Some tooling resolves SDKs through x86 Build Tools paths. If only x64 is installed, you can get false "SDK not found" errors.
+
+Baseline used in this workspace is 10.0.203 with roll-forward enabled.
+
+Note: Elin-Decompiled itself can index without full project loading, but using the shared setup keeps both repos working the same way.
 
 **4. Serena (the search index tool)**
 
@@ -35,7 +43,7 @@ This is the actual tool that indexes all the code so you can search and navigate
 - **Runtime** = the engine that runs C# tools
 - **SDK** = the engine PLUS the toolbox to read project files
 
-For this repo, you need both. The runtime alone isn't enough.
+For shared setup across both repos, runtime + SDK (x64/x86) is the most reliable path.
 
 ## Step-by-Step Installation
 
@@ -55,20 +63,25 @@ winget install Microsoft.DotNet.Runtime.10
 winget install Microsoft.PowerShell
 ```
 
-### Step 3: Install the .NET SDK version 10.0.100
+### Step 3: Install the .NET SDK version 10 (x64 + x86)
 
-**This is crucial:** This repo specifically needs SDK version 10.0.100. Don't skip this step.
+**This is crucial:** Install both variants to avoid resolver mismatches.
 
 ```powershell
 winget install Microsoft.DotNet.SDK.10
 ```
 
+```powershell
+winget install Microsoft.DotNet.SDK.10 --architecture x86 --force
+```
+
 After this finishes, verify you have the right version by typing:
 ```powershell
 dotnet --list-sdks
+& "C:\Program Files (x86)\dotnet\dotnet.exe" --list-sdks
 ```
 
-You should see `10.0.100` (or similar 10.0.x version) in the list.
+You should see 10.0.x in both outputs.
 
 ### Step 4: Install `uv` (a tool that installs Python-based tools)
 
@@ -100,6 +113,7 @@ Type these commands in PowerShell to confirm you have everything:
 serena --version
 dotnet --list-sdks
 dotnet --list-runtimes
+& "C:\Program Files (x86)\dotnet\dotnet.exe" --list-sdks
 pwsh -Version
 ```
 
